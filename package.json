@@ -2,6 +2,9 @@
   "name": "premise-sample-api",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./index.js"
+  },
   "repository": "git@github.com:mel-michael/premise-sample-api.git",
   "author": "Mel Michael <mel.michael007@gmail.com>",
   "license": "MIT",
