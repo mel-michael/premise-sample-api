@@ -1,19 +1,22 @@
 const express = require('express');
+const db = require('./mongo');
+
 const app = express();
 const PORT = 7777;
-const DATABASE_NAME = 'mydb';
 
-const { MongoClient } = require('mongodb');
-const uri = 'mongodb://localhost:27017';
+// Connect to database
+db.connectToDatabase();
 
-MongoClient.connect(uri, function (err, client) {
-  if (err) throw err;
-  const database = client.db(DATABASE_NAME);
-  console.log(`You are now connected to ${DATABASE_NAME}`);
-});
+app.get('/', async (req, res) => {
+  const database = db.getDb();
+  const characters = database.collection('characters');
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
+  const cursor = characters.find({});
+  console.log('CHAr=====:', characters);
+
+  characters.find({}).toArray(function (err, result) {
+    res.json(result);
+  });
 });
 
 app.listen(PORT, () => {
