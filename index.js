@@ -1,4 +1,6 @@
 const express = require('express');
+const cors = require('cors');
+
 const db = require('./mongo');
 
 const app = express();
@@ -6,6 +8,8 @@ const PORT = 7777;
 
 // Connect to database
 db.connectToDatabase();
+
+app.use(cors())
 
 app.get('/', async (req, res) => {
   const database = db.getDb();
