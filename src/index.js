@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
@@ -17,6 +17,22 @@ app.get('/', async (req, res) => {
   const characters = database.collection('characters');
 
   characters.find({}).toArray(function (err, result) {
+    if (err) {
+      console.log(err);
+      res.json({
+        error: err
+      });
+    }
+    res.json(result);
+  });
+});
+
+app.get('/:charId', async (req, res) => {
+  const { charId } = req.params;
+  const database = db.getDb();
+  const characters = database.collection('characters');
+
+  characters.findOne({ char_id: Number(charId) }, function (err, result) {
     if (err) {
       console.log(err);
       res.json({
